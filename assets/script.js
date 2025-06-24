@@ -4,13 +4,19 @@ let usdInput = document.querySelector("#usd");
 let brlInput = document.querySelector("#brl");
 
 usdInput.addEventListener("keyup", () => {
-    usdInput.value = formatCurrency(usdInput.value);
     convert("usd-to-brl");
 })
 
 brlInput.addEventListener("keyup", () => {
-    brlInput.value = formatCurrency(brlInput.value);
     convert("brl-to-usd");
+})
+
+usdInput.addEventListener("blur", () => {
+    usdInput.value = formatCurrency(usdInput.value)
+})
+
+brlInput.addEventListener("blur", () => {
+    brlInput.value = formatCurrency(brlInput.value)
 })
 
 usdInput.value = "1,00"
