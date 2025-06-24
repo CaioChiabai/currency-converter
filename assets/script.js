@@ -1,7 +1,23 @@
-let dolar = 5.1
+let dolar = 0
 
 let usdInput = document.querySelector("#usd");
 let brlInput = document.querySelector("#brl");
+
+window.addEventListener("DOMContentLoaded", () => {
+    fetch("https://economia.awesomeapi.com.br/json/last/USD-BRL")
+        .then(response => response.json())
+        .then(data => {
+            dolar = parseFloat(data.USDBRL.bid); // valor de compra do dólar
+            usdInput.value = "1,00";
+            convert("usd-to-brl");
+        })
+        .catch(error => {
+            console.error("Erro ao buscar o valor do dólar:", error);
+            dolar = 5.1; // valor padrão de fallback
+            usdInput.value = "1,00";
+            convert("usd-to-brl");
+        });
+});
 
 usdInput.addEventListener("keyup", () => {
     convert("usd-to-brl");
@@ -18,9 +34,6 @@ usdInput.addEventListener("blur", () => {
 brlInput.addEventListener("blur", () => {
     brlInput.value = formatCurrency(brlInput.value)
 })
-
-usdInput.value = "1,00"
-convert("usd-to-brl");
 
 function formatCurrency(value) {
     let fixedValue = fixValue(value);
